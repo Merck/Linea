@@ -1,0 +1,37 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@user.errors.count, "error")
+        |  prohibited this user from being saved:
+      ul
+        - @user.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = f.label :username
+    br
+    = f.text_field :username
+  .field
+    = f.label :full_name
+    br
+    = f.text_field :full_name
+  .field
+    = f.label :password
+    br
+    = f.password_field :password
+  .field
+    = f.label :password_confirmation
+    br
+    = f.password_field :password_confirmation
+  .field
+    = f.label :subject_area_id
+    br
+    = f.collection_select :subject_area_id, SubjectArea.all, :id, :name
+  .field
+    = f.label :is_admin
+    br
+    = f.check_box :is_admin
+  .actions
+    = f.submit

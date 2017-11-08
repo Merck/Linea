@@ -1,0 +1,62 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.requests
+  h1
+    = title
+  - if request_accesses.empty?
+    h2.requests__empty
+      | Currently you have no requests
+  - else
+    table.table.requests__table
+      thead
+        tr
+          th
+            | User
+          th
+            | Dataset
+          - unless pending
+            th
+              | Status
+          th
+            | Created at
+          - unless pending
+            th
+              | Updated at
+            th
+              | Role
+          th[colspan="3"]
+      tbody
+        - request_accesses.each do |request_access|
+          tr
+            td
+              = request_access.user.try(:full_name)
+            td
+              = request_access.dataset.try(:name)
+            - unless pending
+              td
+                = request_access.status
+            td
+              = request_access.created_at
+            - unless pending
+              td
+                = request_access.updated_at
+              td
+                = request_access.role_type
+            - if request_access.waiting?
+              td.requests__btn-holder
+                .btn-group
+                  = button_to 'Grant access', approve_dataset_request_access_path(request_access.dataset.id,
+                    request_access.id), class: 'btn btn-primary'
+                  button.btn.btn-primary.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                    span.caret
+                    span.sr-only
+                      | Toggle Dropdown
+                  ul.dropdown-menu.dropdown-menu--dark
+                    li
+                      = button_to raw('Grant access to read data'), approve_dataset_request_access_path(request_access.dataset.id,
+                        request_access.id)
+                    li
+                      = button_to raw('Grant access to read and edit data'), approve_dataset_request_access_path(request_access.dataset.id,
+                        request_access.id, admin: true)
+              td
+                = button_to 'Deny access', reject_dataset_request_access_path(request_access.dataset.id,
+                  request_access.id), class: 'btn btn-danger'

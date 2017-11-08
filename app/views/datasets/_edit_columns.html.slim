@@ -1,0 +1,53 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.modal.fade[id="columns-modal"]
+  .modal-dialog.modal-columns
+    .modal-content
+      .modal-header
+        button.close.confirm[type="button" data-dismiss="modal"]
+          span[aria-hidden="true"]
+            | ×
+          span.sr-only
+            | Close
+        h3.modal-title
+          i.icon.icon-edit-tag-icon
+          | Edit Columns
+      .modal-body
+          #column_diagram_editing
+            = render "column_diagram_editing"
+            br
+          .column_modal_title
+            | New Column Form
+          = form_for @table, url: dataset_tables_path(@dataset), remote: true, html: {id: 'column_table_form'} do |t|
+            = t.fields_for :columns, @table.columns.build do |f|
+              .field#column_name
+                = f.label :name, 'Column Name'
+                = f.text_field :name, placeholder: 'NPI, HCPCS, ...', class: 'form-control'
+              .field
+                = f.label :data_type, 'Data Type'
+                = f.text_field :data_type, placeholder: 'int, float, varchar, ...', class: 'form-control'
+              .field
+                = f.label :description
+                = f.text_area :description, placeholder: 'Example: An NPI is a unique 10-digit identification number issued to health care providers in the United States by the Centers for Medicare and Medicaid Services (CMS).', class: 'form-control', rows: '3'
+              .field
+                = f.label :business_name, 'Variable Linking Name'
+                = f.text_field :business_name, placeholder: 'Usually the same as column name...', class: 'form-control'
+              .field
+                = f.label :is_business_key, 'Use this column for relationship linking?'
+                = f.check_box :is_business_key
+            .btn
+              = t.submit 'Submit New Column', class: 'btn btn-primary', id: 'column_submit'
+      .modal-footer
+        /button.btn[type="button" data-dismiss="modal"]
+          | CANCEL
+        .div.hidden
+          = link_to "Exit", {controller: "datasets", action: "redisplay_columns"}, remote: true, id: "redisplay_columns"
+        .btn.btn-primary.confirm[data-dismiss="modal"]
+          | Exit
+
+
+javascript:
+  $("#columns-modal").on("shown.bs.modal", function() {
+    $('#columns-modal .confirm').one('click', function () {
+      $('#redisplay_columns').click();
+    })
+  });

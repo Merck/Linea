@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require_relative '../config/boot'
+require 'rake'
+ENV['http_proxy'] = nil
+ENV['https_proxy'] = nil
+Rake.application.run

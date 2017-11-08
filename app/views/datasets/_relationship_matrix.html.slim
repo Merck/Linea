@@ -1,0 +1,50 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+/! © 2015 Linea & Co. All rights reserved.
+.relationship-matrix
+  - if @related_datasets.any?
+    .similar-datasets
+      table.table.table-striped.table-bordered.table-hover.table-scroll.allow-adjacency
+        thead
+          tr
+            th.vtop
+              | Similar Datasets
+        tbody
+          - @related_datasets.each do |d|
+            tr.fixed-height
+              td
+                 a[href="/datasets/#{d[:id]}"]
+                  = d[:name]
+  - else
+    p
+      | This dataset does not appear to share columns with other datasets within Linea.
+  .scrollable
+    table.table.table-striped.table-bordered.table-hover.table-scroll.allow-adjacency
+      thead
+        tr
+          - @columns.each do |c|
+            th.center.vtop
+              = c[:name]
+      tbody
+        - @related_datasets.each do |d|
+          tr.fixed-height
+            - cols = @relations.select { |r| r[:source] == d[:id] }.collect { |r| r[:target] }
+            - @columns.each do |c|
+              td.center.fixed-height
+                - if cols.include? c[:id]
+                  i.glyphicon.glyphicon-ok-sign.icon-table
+
+javascript:
+  $("#relationship_matrix_link").on("shown.bs.tab", function() {
+    $(".scrollable").find("th").each(function(e,i) {
+      $(".fixed-column").find("th").css("height", $(this).outerHeight() + "px");
+    });
+
+    $(".fixed-column").find("td").each(function(e,i) {
+      $(".scrollable").find("td").css("height", $(this).outerHeight() + "px" );
+    });
+
+    // Resize similar datasets table header
+    var tableHeaderHeight = $(".scrollable th:first").css("height");
+    $(".similar-datasets th:first").css("height", tableHeaderHeight);
+  });
+

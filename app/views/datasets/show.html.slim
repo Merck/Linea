@@ -1,0 +1,178 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.row.content-container
+  #dataset_filter_div.col-md-4.dataset.related-datasets-container
+    form#dataset_filter
+      input type="hidden" name="query" value=@query
+      .title
+        | Datasets With Similar Tags
+      - @same_tags ||= []
+      - @same_tags.each do |ds|
+        = link_to ds.name, dataset_path(ds.id)
+      - if @same_owner.present?
+        .title
+          | Datasets by #{@dataset.owner_full_name}
+        - @same_owner.each do |ds|
+          = link_to ds.name, dataset_path(ds.id)
+  #dataset_metadata_div.col-md-8.dataset-detail-container
+    .row.header
+      .col-md-8
+        .details-title
+          i.icon.icon-dataset-icon-1
+          = @dataset.name
+      .col-md-4
+        .dataset-menu
+          .btn-toolbar.pull-right
+            - if policy(@dataset).edit?
+                .btn-group
+                  = link_to 'Edit', edit_my_dataset_path(@dataset), class: 'btn btn-primary pull-right'
+            .btn-group
+              = link_to 'Get Data', @dataset.url, class: 'btn btn-primary pull-right', target: '_blank'
+        .subheader-menu
+          .btn-toolbar.pull-right
+            .text-right.actions
+              span
+                a.twitter-share-button[href="https://twitter.com/share" data-show-count="true" data-size="horizontal"]
+                  | Tweet
+                  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+              span
+                i.icon.icon-share-icon
+                a[href="#" onclick="getURL()"]
+                  | Share URL
+    .row.line-break-subheader
+      .col-md-12
+        .horizontal-line
+    /= render "dataset_menu"
+    = render "my_datasets/remove_dataset/dialog"
+    .access.metadata-item
+      .row
+        .col-md-9.col-sm-8.col-xs-8
+          img.profile-image-linea-dataset-detail[src=@dataset.owner.image]
+          p.access__username
+            = "(You) " if policy(@dataset).owner?
+            = @dataset.owner_full_name
+          p
+            | owner
+        .col-md-3.col-xs-4
+          / For old edit/get data buttons
+    - if @dataset.contributors.size > 0
+      .row.contributor.metadata-item
+        .col-md-12
+          .title
+            i.icon.icon-pencil-icon
+            | Contributors
+          div
+            = raw(@dataset.contributors.collect { |c| link_to(c.user.full_name, "#", class: "clickable-name") }.join(", ")) if @dataset.contributors.present?
+    .row.tag-title
+      .col-md-12
+        .title
+          i.icon.icon-tags-icon
+          | Tags
+    .row.tags
+      .col-md-12
+        - tags = @dataset.tags || []
+        - tags.each do |t|
+          = link_to(t.name, search_path(tags: [t.id]), class: "label label-default")
+        span.label.label-default.edit-tags
+          i.icon.icon-edit-tag-icon[data-toggle="modal" data-target="#tags-modal"]
+          a[data-toggle="modal" data-target="#tags-modal"]
+            | Edit Tags
+    .row.description.metadata-item
+      .col-md-12
+        .title
+          i.icon.icon-document-icon
+          | Description
+        = raw(@dataset.description)
+    .row.additional-details.metadata-item
+      .col-md-12
+        .title
+          i.icon.icon-additional-details
+          | Additional Details
+        table.table.table-striped.table-bordered.table-hover
+          tr
+            th.attribute-column
+              | Departments
+            td
+              - if @dataset.subject_area
+                = link_to(@dataset.subject_area_name, search_path(subject_area: [@dataset.subject_area.id]), class: "clickable-name")
+          tr
+            th.attribute-column
+              | Country
+            td
+              = @dataset.country_name
+          tr
+            th.attribute-column
+              | Created
+            td
+              = formatted_date(@dataset.created_at)
+          tr
+            th.attribute-column
+              | Updated
+            td
+              = formatted_date(@dataset.updated_at)
+          - if @dataset.middlegate_type.present?
+            tr
+              th.attribute-column
+                | Size
+              td
+                | N/A
+    = render "extended_attributes"
+    .row.tabs
+      .col-md-12
+        #dataset_tabs
+          ul.nav.nav-tabs.custom-tabs
+            li.active
+              a[href="#notes" data-toggle="tab"]
+                | Notes (
+                span.notes-count = @dataset.notes.size
+                | )
+            li
+              a[href="#columns" data-toggle="tab"]
+                | Columns
+            li
+              a[href="#lineage_diagram" data-toggle="tab"]
+                | Lineage
+            li
+              a#relationship_diagram_link[href="#relationship_diagram" data-toggle="tab"]
+                | Relationships
+            li
+              a#relationship_matrix_link[href="#relationship_matrix" data-toggle="tab"]
+                | Relationship Matrix
+            li
+              a[href="#tos" data-toggle="tab"]
+                | Terms of Use
+        .tab-content
+          #notes.tab-pane.active
+            = render "notes"
+          #columns.tab-pane
+            #column_diagram
+              = render "column_diagram"
+            - if policy(@dataset).edit?
+              /= render "column_form"
+              .btn.btn-primary[data-toggle="modal" data-target="#columns-modal"]
+                | Edit Columns
+          #lineage_diagram.well.tab-pane
+            = render "lineage_diagram"
+          #relationship_diagram.well.tab-pane
+            = render "relationship_diagram"
+          #relationship_matrix.well.tab-pane
+            = render "relationship_matrix"
+          #tos.well.tab-pane
+            p.title
+              | Terms of Use:
+            - if @dataset.terms_of_service
+              p
+                = @dataset.terms_of_service_name
+              p
+                = @dataset.terms_of_service_description
+
+= render "edit_tags"
+= render "edit_columns"
+= render "connection_modal_template"
+= render 'modal_form'
+javascript:
+  $(document).ready(function(){
+    $('#attributes').bind_attributes_edit_buttons();
+  });
+  function getURL() {
+    var person = prompt("Dataset URL:", location.href);
+  };

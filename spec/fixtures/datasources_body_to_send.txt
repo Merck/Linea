@@ -1,0 +1,1 @@
+{"query":{"filtered":{"filter":{"terms":{"datasource.id":"data"}}}},"aggs":{"tags":{"terms":{"field":"tags.id"}},"subject_area":{"terms":{"field":"subject_area.id"}},"owner":{"terms":{"field":"owner.id"}},"datasource":{"terms":{"field":"datasource.id"}}}}

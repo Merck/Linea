@@ -1,0 +1,33 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= form_for(@column) do |f|
+  - if @column.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@column.errors.count, "error")
+        |  prohibited this column from being saved:
+      ul
+        - @column.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = f.label :dataset_id
+    br
+    = f.text_field :dataset_id
+  .field
+    = f.label :name
+    br
+    = f.text_field :name
+  .field
+    = f.label :description
+    br
+    = f.text_field :description
+  .field
+    = f.label :data_type
+    br
+    = f.text_field :data_type
+  .field
+    = f.label :business_name
+    br
+    = f.text_field :business_name
+  .actions
+    = f.submit

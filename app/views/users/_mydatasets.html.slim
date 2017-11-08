@@ -1,0 +1,49 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+#my_datasets.tab-pane.active
+  .col-md-10.col-md-offset-1.mydatasets-nav__outer
+    ul.mydatasets-nav
+      li.mydatasets-nav__item
+        = link_to new_my_dataset_path(anchor: "tab-light-form"), class: "mydatasets-nav__link" do
+
+      / disabled by BDP-829
+      - if true == false
+        li.mydatasets-nav__item
+          = link_to new_my_dataset_path, class: "mydatasets-nav__link" do
+            .mydatasets-nav__icon
+            p.mydatasets-nav__content
+              strong
+                | Load data
+              br
+              span
+                | Load data into new or existing dataset
+  .col-md-10.col-md-offset-1.results-container
+    h3 Owned datasets:
+    - @owned_datasets ||= []
+    - @owned_datasets.each do |d|
+      .row.dataset-result-row*{ 'data-dataset-id' => d.id, 'data-dataset-external-id' => d.external_id }
+        .col-md-12.dataset-result-column
+          .row.header
+            .col-md-9.result-title
+              i.glyphicon.glyphicon-th>
+              = link_to d.name, dataset_path(d)
+            .col-md-3.created-at.pull-right.text-right
+              = formatted_date(d.created_at)
+          .row
+            .col-md-12.text-right.actions
+              span.subject-area
+                i.icon.icon-subject-area-icon
+                a[href="#"]
+                  = d.subject_area_name if d.subject_area
+              span.owner
+                i.icon.icon-pencil-icon
+                a[href="#"]
+                  = d.owner_full_name
+          .row.description
+            .col-md-12
+              p
+                = d.description
+          .row.tags
+            .col-md-12
+              - d.tags.each do |t|
+                span.label.label-default
+                  = t.name

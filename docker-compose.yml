@@ -1,0 +1,54 @@
+# Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+db:
+  image: "postgres:9.3.9"
+  ports:
+    - "5432"
+  environment:
+    - POSTGRES_USER= add your user
+    - POSTGRES_PASSWORD= add your password
+
+es:
+  image: elasticsearch:1.7.2
+  net: "container:db"
+  links:
+    - db
+
+test:
+  image: add your image
+  command: /app/bin/run_tests_docker
+  net: "container:db"
+  links:
+    - db
+    - es
+  volumes:
+    - ".:/app"
+
+web:
+  image: add your image
+  command: rails server --port 3000 --binding 0.0.0.0
+  ports:
+    - "3000"
+  links:
+    - db
+  volumes:
+    - ".:/app"
+
+deploy:
+  image: add your image
+  #command: cp /app/id_rsa /root/.ssh/id_rsa
+  ports:
+    - "3000"
+  links:
+    - db
+  volumes:
+    - ".:/app"
+
+cleanup:
+  image: add your image
+  command: /app/bin/jenkins_cleanup
+  ports:
+    - "3000"
+  links:
+    - db
+  volumes:
+    - ".:/app"

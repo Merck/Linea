@@ -1,0 +1,24 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- dom_id = dom_id(note)
+
+.col-md-9.note-item[id=dom_id]
+  .row
+    .col-md-12
+      span.note-user-name = note.full_name
+      | said on
+      span.note-date = formatted_date(note.updated_at, '%d %b %Y, %k:%M')
+    .note-item-controls
+      .btn-group
+        == link_to edit_dataset_note_path(dataset, note), remote: true, title: 'edit', class: 'btn btn-default btn-xs' do
+          span.glyphicon.glyphicon-edit
+        == link_to dataset_note_path(dataset, note), method: :delete, remote: true, title: 'remove', class: 'btn btn-default btn-xs',
+            data: { confirm: 'Are you sure you want to remove this note?' } do
+          span.glyphicon.glyphicon-remove
+  .row
+    .col-md-2
+      img src="#{image_path(note.avatar_path)}"
+    .col-md-10
+      == urlize(note.body)
+
+- if policy(note).owner?
+  script id="#{dom_id}" $("div##{dom_id}").bind_note_item_controls();

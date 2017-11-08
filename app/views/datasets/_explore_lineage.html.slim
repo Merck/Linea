@@ -1,0 +1,83 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.modal-header
+  button.close[type="button" data-dismiss="modal"]
+    span[aria-hidden="true"]
+      | ×
+    span.sr-only
+      | CLOSE
+  h4.modal-title.details-title
+    button.btn.btn-primary.pull-left[type="button" name="back"]
+      | <
+    button.btn.btn-primary.pull-left[type="button" name="forward"]
+      | >
+    button.btn.btn-primary.pull-left.home-button[type="button" name="home"]
+      | HOME
+    = @dataset.name
+    span.status
+      |  - Lineage
+.modal-body.modal-body-lineage
+  .row.lineage-modal-row
+    #lineage-explorer-diagram.col-md-8
+
+    #lineage-explorer-details.col-md-4.dataset-detail-container
+      = render "dataset_details"
+.modal-footer
+  span.tip.pull-left
+    | Double-click to reroot node
+  button.btn.btn-primary[type="button" data-dismiss="modal"]
+    | CLOSE
+
+javascript:
+  var __EXPLORER_LINEAGE_LOADED = false;
+  var diagram;
+  $('#lineage-modal').on('shown.bs.modal', function() {
+
+    if( !__EXPLORER_LINEAGE_LOADED ) {
+      var parent_lineages = #{raw(@parent_lineages.to_json)};
+      var child_lineages =  #{raw(@child_lineages.to_json)};
+
+      diagram = new NewLineageDiagram(parent_lineages, child_lineages, '#lineage-explorer-diagram', 750, 750, false );
+      diagram.load();
+
+      diagram.node_click_callback(function(d) {
+
+        $("#lineage-explorer-diagram").find(".selected").attr("class", function() { return $(this).attr("class").replace("selected", ""); } );
+        $(this).attr("class", $(this).attr("class") + " selected")
+
+        $.ajax({
+          url: "/datasets/" + d.dataset_id + "/lineage_dataset_details",
+          method: "GET",
+          success: function(response) {
+            $("#lineage-explorer-details").empty();
+            $("#lineage-explorer-details").append( response );
+            $("input.rating").rating();
+            diagram.set_reroot_button( $("button[name=reroot_button]") , d.dataset_id );
+          }
+        });
+      });
+
+      diagram.link_click_callback(function(d) {
+
+        $("#lineage-explorer-diagram").find(".selected").attr("class", function() { return $(this).attr("class").replace("selected", ""); } );
+        $(this).attr("class", $(this).attr("class") + " selected")
+
+        $.ajax({
+          url: "/lineages/" + d.target.lineage_id + "/details",
+          method: "GET",
+          success: function(response) {
+            $("#lineage-explorer-details").empty();
+            $("#lineage-explorer-details").append( response );
+          }
+        });
+      });
+
+      diagram.enable_interactivity();
+
+      diagram.set_home_button( $("button[name=home]") );
+      diagram.set_back_button( $("button[name=back]") );
+      diagram.set_forward_button( $("button[name=forward]") );
+      diagram.set_reroot_button( $("button[name=reroot_button]"), #{@dataset.id})
+
+      __EXPLORER_LINEAGE_LOADED = true;
+    }
+  });

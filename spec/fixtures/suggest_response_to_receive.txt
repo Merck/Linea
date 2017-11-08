@@ -1,0 +1,1 @@
+{ '_shards' => { 'total' => 5, 'successful' => 5, 'failed' => 0 }, 'owner_name' => [{ 'text' => 'he', 'offset' => 0, 'length' => 2, 'options' => [] }], 'name' => [{ 'text' => 'he', 'offset' => 0, 'length' => 2, 'options' => [] }], 'tag' => [{ 'text' => 'he', 'offset' => 0, 'length' => 2, 'options' => [{ 'text' => 'health', 'score' => 1.0 }] }] }

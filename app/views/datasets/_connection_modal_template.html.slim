@@ -1,0 +1,120 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+script#connection-modal-template[type="text/x-template"]
+  |  {{#*inline "ErrorMessage"}}
+  |    <p class="modal-error">There was an error processing your request:</p>
+  |    <p class="modal-error">{{this.message}}</p>
+  |  {{/inline}}
+
+  |  {{#*inline "Connection"}}
+  |    {{#with this.[1]}}
+  |    <h4>{{this.type}} connection</h4>
+  |    <div class="row">
+  |      {{#each_except this 'type'}}
+  |        {{> DetailsLarge this}}
+  |      {{/each_except}}
+  |    </div> <!-- /.row -->
+  |    {{/with}}
+
+  |    {{#with this.[0]}}
+  |    <h4>{{this.type}} connection</h4>
+  |    <div class="row">
+  |      {{#each_except this 'type'}}
+  |        {{> DetailsCols this}}
+  |      {{/each_except}}
+  |    </div> <!-- /.row -->
+  |    {{/with}}
+  |  {{/inline}}
+
+  |  {{#*inline "DetailsCols"}}
+  |    {{#if value}}
+  |    <div class="col-md-6">
+  |      <label>{{key}}</label>
+  |      <div class="input-group">
+  |        <input class="form-control" type="text" value={{value}}>
+  |        <span class="input-group-btn">
+  |          <button class="btn btn-default btn-copy" type="button">Copy</button>
+  |        </span>
+  |      </div> <!-- /.input-group -->
+  |    </div>
+  |    {{/if}}
+  |  {{/inline}}
+
+  |  {{#*inline "DetailsLarge"}}
+  |    {{#if value}}
+  |    <div class="col-md-12">
+  |      <div class="input-group">
+  |        <textarea class="form-control custom-control" rows="3" style="resize:none">{{value}}</textarea>
+  |        <span class="input-group-addon btn btn-default btn-copy">Copy</span>
+  |      </div> <!-- /.input-group -->
+  |    </div>
+  |    {{/if}}
+  |  {{/inline}}
+
+  |  <div class="modal fade" id="connection-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  |    <div class="modal-dialog">
+  |      <div class="modal-content">
+  |        <div class="modal-header">
+  |          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  |          {{#if error}}
+  |            <h4 class="modal-title">{{error}}</h4>
+  |          {{else}}
+  |            <h4 class="modal-title">Connection info</h4>
+  |          {{/if}}
+  |        </div>
+  |        <div class="modal-body">
+  |          {{#if response}}
+
+  |            <ul class="nav nav-tabs" role="tablist">
+  |            {{#if response.latest_connection}}
+  |              <li role="presentation" class="active">
+  |                <a href="#latest_data" role="tab" data-toggle="tab">
+  |                  Latest data
+  |                </a>
+  |              </li>
+  |            {{/if}}
+
+  |              <li role="presentation" class="{{#unless response.latest_connection}}active{{/unless}}">
+  |                <a href="#combined_data" role="tab" data-toggle="tab">
+  |                  Combined data
+  |                </a>
+  |              </li>
+  |            </ul>
+
+  |            <div class="tab-content">
+  |              {{#with response.latest_connection}}
+  |              <div role="tabpanel" class="tab-pane active" id="latest_data">
+  |                {{#if error}}
+  |                  {{> ErrorMessage error}}
+  |                {{else}}
+  |                  {{> Connection this}}
+  |                {{/if}}
+
+  |              </div> <!-- /.tab-pane -->
+  |              {{/with}}
+
+
+
+  |              <div role="tabpanel" class="tab-pane {{#unless response.latest_connection}}active{{/unless}}" id="combined_data">
+  |                {{#with response.connection}}
+  |                {{#if error}}
+  |                  {{> ErrorMessage error}}
+  |                {{else}}
+  |                <span>
+  |                  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+  |                  This connection represents all versions of the dataset.
+  |                </span>
+  |                  {{> Connection this}}
+  |                {{/if}}
+  |                {{/with}}
+  |              </div> <!-- /.tab-pane -->
+  |            </div> <!-- /.tab-content -->
+
+  |          {{else}}
+  |            <p class="modal-error">Sorry, there was an error proceeding your request. <br>If the problem persists, please, contact the support team.</p>
+  |          {{/if}}
+  |        </div> <!-- /.modal-body -->
+
+  |      </div>
+  |    </div>
+  |  </div>
+

@@ -1,0 +1,79 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= link_to dataset_url(@dataset) do
+  h2.details-title
+    = @dataset.name
+.row.sub-header.sub-header-item
+  .col-md-12
+    span.ratings
+      input.rating[id="ratings" type="number" size="xs" value=@dataset.review_activities.average(:rating)]
+    span.reviews
+      = @dataset.review_activities.count
+      |  Reviews
+    span.likes
+      i.icon.icon-like-icon
+      = @dataset.like_activities.count
+    span
+      button.btn.btn-primary[name="reroot_button"]
+        | REROOT
+.row.line-break-large
+  .col-md-12
+    .horizontal-line
+.row.owner.metadata-item
+  .col-md-12
+    .title
+      i.icon.icon-pencil-icon
+      | Owner
+    div
+      a.user-name
+        = @dataset.owner_full_name
+.row.contributor.metadata-item
+  .col-md-12
+    .title
+      i.icon.icon-pencil-icon
+      | Contributors
+    div
+      = raw(@dataset.contributors.collect { |c| link_to(c.user.full_name, "#", class: "clickable-name") }.join(", ")) if @dataset.contributors.present?
+.row.tag-title
+  .col-md-12
+    .title
+      i.icon.icon-tags-icon
+      | Tags
+.row.tags
+  .col-md-12
+    - @dataset.tags ||= []
+    - @dataset.tags.each do |t|
+      span.label.label-default
+        = t.name
+.row.line-break-large
+  .col-md-12
+    .horizontal-line
+.row.description.metadata-item
+  .col-md-12
+    .title
+      i.icon.icon-document-icon
+      | Description
+    = @dataset.description
+.row.line-break-large
+  .col-md-12
+    .horizontal-line
+.row.size.metadata-item
+  .col-md-12
+    .title
+      i.icon.glyphicon.glyphicon-floppy-disk
+      | Size
+    div
+      = @dataset.size_formatted
+.row.metadata-item
+  .col-md-12
+    .title
+      i.icon.glyphicon.glyphicon-arrow-up
+      | Parent Datasets
+    div
+      = @dataset.parent_lineages.collect { |l| l.parent_dataset.name }.join(", ") if @dataset.parent_lineages.present?
+.row.metadata-item
+  .col-md-12
+    .title
+      i.icon.glyphicon.glyphicon-arrow-down
+      | Child Datasets
+    div
+      = @dataset.child_lineages.collect { |l| l.child_dataset.name }.join(", ") if @dataset.child_lineages.present?

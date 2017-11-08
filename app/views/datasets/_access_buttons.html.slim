@@ -1,0 +1,17 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- if policy(@dataset).owner?
+  p
+    = link_to 'Access requests', mydatasets_path(anchor: "tab-requests")
+- if @request_access.new_record?
+  = form_for(:request_access, url: ask_for_request_dataset_path(params[:id])) do |f|
+    = f.submit 'Request access', class: 'btn btn-primary'
+- else
+  - if @request_access.status == 'rejected'
+    button.btn.btn-danger[disabled]
+      | Access rejected
+  - elsif @request_access.status == 'waiting'
+    button.btn.btn-primary[disabled]
+      | Pending request
+  - elsif @request_access.status == 'approved'
+    button.btn.btn-primary[disabled]
+      | You already requested access for this dataset

@@ -1,0 +1,93 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- @newsfeed_items.each do |a|
+  .row.dataset-result-row
+    - if a.like_activity_id
+      .col-md-12.like-activity
+        .activity-user
+          span.user-name
+            = a.user.full_name
+          img.profile-image[src= a.user.image]
+        div
+          .newsfeed-title
+            i.icon.icon-like-icon
+            span.status
+              | Liked
+            |  -
+            = link_to a.dataset.name, a.dataset
+        p.activity-time
+          = a.at_time
+        p.activity-details
+    - elsif a.share_activity_id
+      .col-md-12.share-activity
+        .activity-user
+          span.user-name
+            = a.user.full_name
+          img.profile-image[src= a.user.image]
+        div
+          .newsfeed-title
+            i.icon.icon-share-icon
+            span.status
+              | Shared
+            |  -
+            = link_to a.dataset.name, a.dataset
+        p.activity-time
+          = a.at_time
+        p.activity-details
+          = a.share_activity.comment
+    - elsif a.review_activity_id
+      .col-md-12.review-activity
+        .activity-user
+          span.user-name
+            = a.user.full_name
+          img.profile-image[src= a.user.image]
+        div
+          .newsfeed-title
+            i.icon.icon-reviews-icon
+            span.status
+              | Reviewed
+            |  -
+            = link_to a.dataset.name, a.dataset
+            span.ratings
+              input id="ratings" type="number" class="rating" size="xs" value="#{a.review_activity.rating}"
+        p.activity-time
+          = a.at_time
+        p.activity-details
+          = a.review_activity.review
+    - elsif a.ingest_activity_id
+      .col-md-12.ingest-activity
+        .activity-user
+          span.user-name
+            = a.user.full_name
+          img.profile-image[src= a.user.image]
+        div
+          .newsfeed-title
+            i.glyphicon.glyphicon-plus
+            span.status
+              | Created
+            |  -
+            = link_to a.dataset.name, a.dataset
+        p.activity-time
+          = a.at_time
+        p.activity-details
+          = a.dataset.description
+    - elsif a.update_activity_id
+      .col-md-12.update-activity
+        .activity-user
+          span.user-name
+            = a.user.full_name
+          img.profile-image[src= a.user.image]
+        div
+          .newsfeed-title
+            i.icon.icon-updated-icon
+            span.status
+              | Updated
+            |  -
+            = link_to a.dataset.name, a.dataset
+        p.activity-time
+          = a.at_time
+        p.activity-details
+          = a.update_activity.comment
+
+  - if @newsfeed_items.empty?
+    .row.dataset-result-row.js-hit-bottom
+      |  No more information to show ...

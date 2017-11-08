@@ -1,0 +1,54 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.modal.fade[id="tags-modal" data-url=update_tags_dataset_url(@dataset) data-dataset-url=dataset_url(@dataset)]
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal"]
+          span[aria-hidden="true"]
+            | ×
+          span.sr-only
+            | Close
+        h3.modal-title
+          i.icon.icon-edit-tag-icon
+          | Edit tags
+      .modal-body
+        .title
+          | Popular tags
+        #tag-cloud.well
+        .title
+          | Add tags
+        .add-tags-form
+          form#tag-form
+            input[type="text" name="tag"]
+            input.btn.btn-primary[type="submit" value="ADD"]
+          span#new-tag-alert
+        .new-tags
+
+        - if @dataset.dataset_tags.present?
+          .title
+            | Select tags to remove
+          - @dataset.dataset_tags.each do |t|
+            span.label.label-default.existing-classes[id=t.id data-tag-name=t.tag.name]
+              = t.tag.name
+              i.icon.icon-close-button
+      .modal-footer
+        button.btn[type="button" data-dismiss="modal"]
+          | CANCEL
+        button.btn.btn-primary.confirm[type="button"]
+          | CONFIRM
+
+javascript:
+  // load it before modal is fully shown
+  $("#tags-modal").on("show.bs.modal", DatasetTags.loadTagCloud);
+  // and then do this
+  $("#tags-modal").on("shown.bs.modal", function() {
+    DatasetTags.setAutocomplete();
+
+    function clickExistingTag() {
+      $(this).toggleClass("selected");
+    }
+
+    $('#tag-form').on('submit', DatasetTags.addTag);
+    $('.existing-classes').on('click', clickExistingTag)
+    $('#tags-modal .confirm').one('click', DatasetTags.saveAllTagChanges);
+  });

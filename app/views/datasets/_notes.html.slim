@@ -1,0 +1,16 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- if logged_in?
+  .row.note-form
+    = form_for @note, url: dataset_notes_path(@dataset), remote: true do |f|
+      .col-md-9
+        .note-form-title Leave a note about this data
+        a href='#' data-toggle='tooltip' data-trigger='hover click' data-placement='right' title='Provide any comments regarding your experience with this data that could be of value to other users. Please note that this information will be visible to all Linea users.'
+          i.glyphicon.glyphicon-question-sign
+        = f.text_area :body, class: 'form-control', placeholder: 'Example: How did you use this dataset? What was your experience with the quality and coverage?', rows: '3'
+
+      .col-md-3.note-form-controls
+        = f.submit 'PUBLISH', class: 'btn btn-primary'
+- else
+  | Want to leave a comment about this dataset? Please <a href="/auth/google_oauth2">log in</a> to do so!
+
+= render 'notes/list'

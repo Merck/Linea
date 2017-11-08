@@ -1,0 +1,32 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+#lineage_diagram_container
+  .row
+    .col-md-8
+      .title
+        | Lineage
+    .col-md-4.right
+      p
+        a.btn.btn-primary.explore-link[data-toggle="modal" data-target="#lineage-modal"]
+          | EXPLORE LINEAGE
+#lineage-modal.modal.fade
+  .modal-dialog.modal-xl
+    .modal-content
+      = render "explore_lineage"
+
+javascript:
+  var ___LINEAGE_LOADED = false;
+  $('a[href="#lineage_diagram"]').click(function (e) {
+    $("#lineage_diagram").tab('show');
+    setTimeout(function() {
+      if( !___LINEAGE_LOADED ) {
+        var parent_lineages = #{raw(@immediate_parent_linages.to_json)};
+        var child_lineages = #{raw(@immediate_child_lineages.to_json)};
+
+        var diagram = new NewLineageDiagram(parent_lineages, child_lineages, '#lineage_diagram_container', 600, 665, true );
+        diagram.load();
+
+        ___LINEAGE_LOADED = true;
+      }
+    }, 200);
+  });
+

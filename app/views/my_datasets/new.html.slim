@@ -1,0 +1,21 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.new-dataset.js-detect-mg-type
+  #light-form
+    .row
+      .col-md-6.col-md-offset-3
+        h1.upload__title
+          | Register New Dataset
+    .new-dataset__form
+      = form_for @dataset, namespace: 'simple',
+                          url: my_datasets_path,
+                          html: { "data-form" => "dataset", multipart: true } do |form|
+        .row
+          .col-md-6.col-md-offset-3
+            fieldset.pad
+              = render 'form_dataset_simple', form: form
+            = form.submit 'Add to Catalog', class: 'btn btn-primary pull-right'
+
+javascript:
+  $(document).ready(function() {
+    $('#simple_dataset_tag_ids').select2({ tags: true, theme: "bootstrap" });
+  });

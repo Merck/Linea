@@ -1,0 +1,21 @@
+# Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+en:
+  pundit:
+    default: 'You cannot perform this action.'
+    dataset_policy:
+      owner?: 'You are not owner of dataset!'
+      edit?: 'You do not have access to edit this dataset.'
+      read?: 'You do not have access to this dataset.'
+      destroy?: 'You do not have access to remove this dataset.'
+    request_access_policy:
+      resolved?: 'You already resolved this request!'
+    user_elasticsearch_policy:
+      can_manage?: 'You do not have access to edit this Elasticsearch solution'
+
+  no_middlegate_access: "Access to certain features is restricted as part of this 'Early Access' release. If you have a dataset you'd like to ingest or project for the big data platform, please contact us at %{url_text}"
+  #url: 'mailto:EarlyAccess@Company.com' uncomment and change to the Early Access request email your going to use
+  url_text: 'Big Data Now'
+  athena_cluster_name: "Athena Hadoop cluster"
+  serengeti_cluster_name: "Serengeti - Equinox Hadoop cluster"
+  cannot_change_cluster: "You cannot change cluster origin. In order to change the cluster origin, please add a new dataset."
+  no_jdbc_connection_info: "No JDBC connection info available."

@@ -1,0 +1,40 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+h1
+  | Listing users
+table.table
+  thead
+    tr
+      th
+        | Id
+      th
+        | Username
+      th
+        | full_name
+      th
+        | Subject Area
+      th
+        | Is Admin
+      th[colspan="4"]
+  tbody
+    - @users.each do |user|
+      tr
+        td
+          = user.id
+        td
+          = user.username
+        td
+          = user.full_name
+        td
+          = user.subject_area_name
+        td
+          = user.is_admin
+        td
+          = link_to 'Impersonate', sessions_impersonate_path(user_id: user.id)
+        td
+          = link_to 'Show', user
+        td
+          = link_to 'Edit', edit_user_path(user)
+        td
+          = link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
+br
+= link_to 'New User', new_user_path

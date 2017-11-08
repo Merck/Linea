@@ -1,0 +1,93 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- if @datasets.present?
+  .row.content-container
+    .col-md-4.filter-container
+      .title
+        | Refine by
+      form#search_filter
+        input type="hidden" name="query" value=@query
+        = render 'filter_countries'
+        = render 'filter_subject_areas'
+        = render 'filter_tags'
+        = render 'filter_owners'
+
+        button.btn.btn-primary.clear-filter[onclick="clear_filters()" type="button"]
+          | CLEAR FILTERS
+
+    .col-md-8.results-container
+      - @datasets.each_with_hit do |d, hit|
+        div
+
+        .row.dataset-result-row
+          .col-md-12.dataset-result-column
+            .row.header
+              .col-md-9.result-title
+                i.icon.icon-dataset-icon-1
+                = link_to d.name, dataset_path(d)
+              .col-md-3.created-at.pull-right.text-right
+                = formatted_date(d.created_at)
+            .row.sub-header
+              .col-md-12.text-right.actions
+                span.subject-area
+                  i.icon.icon-subject-area-icon
+                  = link_to d.subject_area_name, search_path('subject_area[]' => d.subject_area_id)
+                - if d.owner && d.owner.is_active
+                  span.owner
+                    i.icon.icon-pencil-icon
+                    = link_to d.owner_full_name, search_path('owner[]' => d.owner_id)
+                  img.profile-image[src= d.owner.image]
+                - else
+                  span.owner
+                    i.icon.icon-pencil-icon
+                    a#owner-help[href="#" data-toggle="tooltip" data-trigger="hover click" data-placement="top" title="Dataset owner does not exist in Linea. Please contact Admin support team to change dataset ownership."]
+                      s
+                        = d.owner_full_name
+            .row.description
+              .col-md-12
+                - if hit.try(:[], :highlight).try(:[], :description)
+                  p
+                    = raw(hit[:highlight][:description].to_a.join('').truncate(510, separator: /\s/))
+                    = link_to ' (read more)', dataset_path(d)
+                - else
+                  p
+                    = raw(d.description.truncate(400))
+                    = link_to ' (read more)', dataset_path(d)
+            .row.tags
+              .col-md-12
+                - d.tags.each do |t|
+                  = link_to(t.name, search_path(tags: [t.id]), class: "label label-default")
+      .row.pagination-row
+        .col-md-12
+          = will_paginate @datasets, { previous_label: "PREVIOUS", next_label: "NEXT"}
+
+  javascript:
+    function clear_filters() {
+      $("#form_searchbar").submit();
+    }
+
+    function disableClearFilterBtn () {
+      var checkedFilter = $('.filter_checkbox[checked]');
+      var clearFilterBtn = $('.clear-filter');
+      if( checkedFilter.length === 0 ) {
+        clearFilterBtn.attr('disabled','disabled');
+      }
+    }
+
+    $(document).ready( function() {
+      disableClearFilterBtn();
+    });
+
+    function filterOverflowToggle(element, overflow_class) {
+      $(overflow_class).slideToggle();
+      if( $(element).html() === "Show all" ) {
+        $(element).html("Hide all");
+      }else{
+        $(element).html("Show all");
+      }
+    }
+
+- else
+  .row.content-container
+    h2.center
+      | No search results found
+

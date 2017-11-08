@@ -1,0 +1,13 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+.filter-section-title
+  | COUNTRY
+- @countries ||= []
+- @render_countries = SearchFilterDecorator.new(@countries) { |t| (@selected_country_codes || []).include?(t) }
+.filter-countries
+  - @render_countries.renderables.each do |t|
+    div class="country-filter #{t.html_class}"
+      input.filter_checkbox[value=t.item.to_s.upcase id="country_code_#{t.item}" name="country_code[]" type="checkbox" onclick="$('#search_filter').submit();" checked=t.checked]
+      = label_tag nil, "#{find_by_country_code(t.item.to_s.upcase)} (#{@countries_count[t.item.to_s.upcase]})", for: "country_code_#{t.item}"
+- if @render_countries.show_more?
+  a.toggle-all-countries[onclick="filterOverflowToggle(this, '.filter-countries .overflow-filter')"]
+    | Show all

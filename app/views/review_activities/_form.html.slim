@@ -1,0 +1,29 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= form_for(@review_activity) do |f|
+  - if @review_activity.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@review_activity.errors.count, "error")
+        |  prohibited this review_activity from being saved:
+      ul
+        - @review_activity.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = f.label :user_id
+    br
+    = f.text_field :user_id
+  .field
+    = f.label :dataset_id
+    br
+    = f.number_field :dataset_id
+  .field
+    = f.label :review
+    br
+    = f.text_area :review
+  .field
+    = f.label :rating
+    br
+    = f.number_field :rating
+  .actions
+    = f.submit

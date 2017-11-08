@@ -1,0 +1,66 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+script#transformation-status-modal-template[type="text/x-template"]
+  |  <div class="modal fade" id="transformation-status-modal" tabindex="0" role="dialog" aria-hidden="true">
+  |    <div class="modal-dialog logs-modal">
+  |      <div class="modal-content">
+  |        <div class="modal-header {{transformation_status}}">
+  |          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  |          <h4 class="modal-title">
+  |            <ul class="list-inline">
+  |              <li><span id="trasnformation-id-lbl" data-transId="{{transformation_id}}" class="{{transformation_status}}">{{data.logs.transformation_instance}}</span>
+  |                /
+  |                <span class="{{transformation_status}}">
+  |                <div class="btn-group">
+  |                  <button type="button" id="actions-btn"
+  |                          class="btn {{transformation_status}}  dropdown-toggle" data-toggle="dropdown"
+  |                          aria-haspopup="true" aria-expanded="false" value="{{action_name}}">
+  |                    {{action_name}}&nbsp;
+  |                    <span class="caret"></span>
+  |                  </button>
+  |                  <ul id="actions-dropdown-menu" class="dropdown-menu {{transformation_status}}">
+  |                    {{#each action_list as |item|}}
+  |                    <li class="{{formatStatusValues item.status}}">
+  |                      <span>
+  |                      <i class="{{toggleStatusIcon}}"></i>
+  |                        <a href="#{{@index}}" class="dropdown-toogle lbl {{formatStatusValues item.status}}" data-id="{{action_name}}" data-index="{{action_name}}">{{action_name}}</a>
+  |                        </span>
+  |                    </li>
+  |                    {{/each}}
+  |                  </ul>
+  |                </div>
+  |                </span>
+  |                <span>/</span>
+  |                <span><a  id="get-transformation-log-by-type"
+  |                          data-logtype="stderr" class="item-inactive label {{transformation_status}}"
+  |                          href="#{transformation_status_log_dataset_path(format: :json)}">Errors</a></span>
+  |                <span>&bull;</span>
+  |                <span><a  id="get-transformation-log-by-type" data-logtype="stdout"
+  |                          class="item-inactive label {{transformation_status}}"
+  |                          href="#{transformation_status_log_dataset_path(format: :json)}">Output</a>
+  |                </span>
+  |                <span>&bull;</span>
+  |                <span>
+  |                  <a  id="get-transformation-log-by-type"
+  |                      data-logtype="syslog" class="item-inactive label {{transformation_status}}"
+  |                      href="#{transformation_status_log_dataset_path(format: :json)}">Syslog</a>
+  |                </span>
+  |              </li>
+  |            </ul>
+  |          </h4>
+  |        </div>
+  |        <div class="modal-body">
+  |          {{#if data}}
+  |            {{#if data.success }}
+  |            <div id="panel-log-body" class="scroll-pane text-left">
+  |              {{default_log}}
+  |              <div class="horizontal-line-bold"></div>
+  |            </div>
+  |          {{else}}
+  |          <p class="modal-error">{{data.message}} </p>
+  |          {{/if}}
+  |        {{/if}}
+  |        </div> <!-- /.modal-body -->
+  |      </div>
+  |    </div>
+  |  </div>
+

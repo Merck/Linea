@@ -1,0 +1,28 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= form_for([@dataset, @dataset_attribute], remote: true, html: {role: :form, 'data-model' => 'dataset_attribute', id: 'dataset-attribute-form'}) do |f|
+
+  .form-group.attrib-key
+    = f.label :key, 'Key', class: 'control-label', style: 'padding-right: 5px; display: inline-block'
+    a[href="#" id='key-help' data-toggle='tooltip' data-trigger='hover click' data-placement='right' title="Enter the name of the attribute (key) you want to add. For example 'Website'. Start typing to see a list of existing keys"]
+      i.glyphicon.glyphicon-question-sign
+    = f.text_field :key, class: 'form-control', id: 'attrib-key', autocomplete: 'off'
+    span.help-block
+  .form-group
+    = f.label :value, 'Value', class: 'control-label', style: 'padding-right: 5px; display: inline-block'
+    a[href="#" id='key-help' data-toggle='tooltip' data-trigger='hover click' data-placement='right' title="Enter the value for the key."]
+      i.glyphicon.glyphicon-question-sign
+    = f.text_area :value, rows: 5, class: 'form-control'
+    span.help-block
+  .form-group
+    = f.label :comment, 'Comment', class: 'control-label', style: 'padding-right: 5px; display: inline-block'
+    a[href="#" id='key-help' data-toggle='tooltip' data-trigger='hover click' data-placement='right' title="Enter any comment related to this key value for this dataset (optional)."]
+      i.glyphicon.glyphicon-question-sign
+    = f.text_area :comment, rows: 5, class: 'form-control'
+    span.help-block
+
+  .actions
+    .btn-toolbar.pull-right
+      .btn-group
+        = f.submit add_or_update(@dataset_attribute), class: 'btn btn-primary'
+      .btn-group
+        button.btn.btn-default(type="button" data-dismiss="modal") Cancel

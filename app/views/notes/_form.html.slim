@@ -1,0 +1,17 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+= form_for @note, url: dataset_note_path(@dataset, @note), method: :patch, remote: true, html: { role: :form, 'data-model' => 'note', id: 'note-form' } do |f|
+  .form-group
+    = f.label :body, 'Note', class: 'control-label'
+    = f.text_area :body, class: 'form-control', rows: '4'
+    span.help-block
+
+  - if @note.errors.any?
+    div
+      = @note.errors.full_messages.inspect
+
+  .actions
+    .btn-toolbar.pull-right
+      .btn-group
+        = f.submit 'SUBMIT', class: 'btn btn-primary'
+      .btn-group
+        button.btn.btn-default[type='button' data-dismiss='modal'] Cancel

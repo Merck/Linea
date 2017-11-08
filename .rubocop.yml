@@ -1,0 +1,460 @@
+# Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+inherit_from: .rubocop_wishlist.yml
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'spec/**/*'
+    - 'db/schema.rb'
+  TargetRubyVersion: 2.2
+
+
+Lint/AmbiguousOperator:
+  Exclude:
+
+# Configuration parameters: AllowSafeAssignment.
+Lint/AssignmentInCondition:
+  Enabled: false
+
+# Cop supports --auto-correct.
+# Configuration parameters: AlignWith, SupportedStyles, AutoCorrect.
+Lint/EndAlignment:
+  Enabled: true
+
+Lint/Eval:
+  Exclude:
+
+Lint/HandleExceptions:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect.
+Lint/LiteralInInterpolation:
+  Exclude:
+
+Lint/Loop:
+  Exclude:
+
+Lint/NestedMethodDefinition:
+  Exclude:
+
+Lint/NonLocalExitFromIterator:
+  Exclude:
+
+Lint/RequireParentheses:
+  Exclude:
+
+Lint/RescueException:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+
+Lint/UnderscorePrefixedVariableName:
+  Exclude:
+
+Lint/UnreachableCode:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: IgnoreEmptyBlocks.
+Lint/UnusedBlockArgument:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/UselessAccessModifier:
+  Exclude:
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/BlockNesting:
+  Max: 5
+
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  Max: 11347
+
+Metrics/CyclomaticComplexity:
+  Max: 35
+
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 7602
+
+# Configuration parameters: CountComments.
+Metrics/ModuleLength:
+  Max: 311
+
+# Configuration parameters: CountKeywordArgs.
+Metrics/ParameterLists:
+  Max: 7
+
+# Cop supports --auto-correct.
+Performance/Count:
+  Exclude:
+
+# Cop supports --auto-correct.
+Performance/Detect:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnabledForFlattenWithoutParams.
+Performance/FlatMap:
+  Exclude:
+
+# Cop supports --auto-correct.
+Performance/ReverseEach:
+  Exclude:
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Rails/Date:
+  Exclude:
+
+# Configuration parameters: Include.
+Rails/HasAndBelongsToMany:
+  Exclude:
+
+# Configuration parameters: Include.
+Rails/Output:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: Include.
+Rails/ReadWriteAttribute:
+  Exclude:
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Rails/TimeZone:
+  Enabled: false
+
+# Configuration parameters: Include.
+Rails/Validation:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/AccessModifierIndentation:
+  Enabled: true
+
+# Cop supports --auto-correct.
+Style/Alias:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/AlignArray:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
+Style/AlignHash:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/AlignParameters:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/AndOr:
+  Enabled: false
+
+# Cop supports --auto-correct.
+Style/BlockComments:
+  Exclude:
+    - app/controllers/sessions_controller.rb
+    - db/seeds.rb
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
+Style/BlockDelimiters:
+  Exclude:
+
+Style/CaseEquality:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep.
+Style/CaseIndentation:
+  Enabled: true
+
+# Cop supports --auto-correct.
+Style/CharacterLiteral:
+  Exclude:
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/ClassAndModuleChildren:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/ClassCheck:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/ClosingParenthesisIndentation:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/ColonMethodCall:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/CommentIndentation:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/DefWithParentheses:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/PreferredHashMethods:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/DotPosition:
+  Enabled: true
+
+# Cop supports --auto-correct.
+Style/ElseAlignment:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/EmptyElse:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/EmptyLiteral:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowForAlignment.
+Style/ExtraSpacing:
+  Enabled: true
+  Exclude:
+    - db/schema.rb
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/FirstParameterIndentation:
+  Exclude:
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/For:
+  Enabled: true
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/FormatString:
+  Exclude:
+
+# Configuration parameters: AllowedVariables.
+Style/GlobalVars:
+  Exclude:
+
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
+  Enabled: false
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues.
+Style/HashSyntax:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: MaxLineLength.
+Style/IfUnlessModifier:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/IndentationConsistency:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: Width.
+Style/IndentationWidth:
+  Enabled: true
+
+# Cop supports --auto-correct.
+Style/Lambda:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/LineEndConcatenation:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/MethodCallParentheses:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/MethodDefParentheses:
+  Enabled: true
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/MethodName:
+  Enabled: true
+
+Style/MultilineBlockChain:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/MultilineOperationIndentation:
+  Enabled: true
+
+Style/MultilineTernaryOperator:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/NegatedIf:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/NegatedWhile:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
+Style/Next:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/NilComparison:
+  Exclude:
+
+Style/OpMethod:
+  Exclude:
+
+Style/OptionalArguments:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowSafeAssignment.
+Style/ParenthesesAroundCondition:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: PreferredDelimiters.
+Style/PercentLiteralDelimiters:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/PerlBackrefs:
+  Exclude:
+
+# Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
+Style/PredicateName:
+  Enabled: true
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/RaiseArgs:
+  Enabled: false
+
+# Cop supports --auto-correct.
+Style/RedundantBegin:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/RedundantException:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowMultipleReturnValues.
+Style/RedundantReturn:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/RedundantSelf:
+  Enabled: true
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
+Style/RegexpLiteral:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/RescueEnsureAlignment:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/RescueModifier:
+  Enabled: false
+
+# Cop supports --auto-correct.
+Style/SelfAssignment:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowAsExpressionSeparator.
+Style/Semicolon:
+  Exclude:
+
+# Configuration parameters: Methods.
+Style/SingleLineBlockParams:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowIfMethodIsEmpty.
+Style/SingleLineMethods:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: IgnoredMethods.
+Style/SymbolProc:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
+Style/TrailingCommaInLiteral:
+  Exclude:
+
+Style/TrailingCommaInArguments:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, Whitelist.
+Style/TrivialAccessors:
+  Exclude:
+
+Style/UnlessElse:
+  Exclude:
+
+# Cop supports --auto-correct.
+Style/VariableInterpolation:
+  Exclude:
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/VariableName:
+  Enabled: true
+
+# Cop supports --auto-correct.
+Style/WhileUntilDo:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: MaxLineLength.
+Style/WhileUntilModifier:
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: WordRegex.
+Style/WordArray:
+  MinSize: 5
+
+Style/AsciiComments:
+  Exclude:
+    - db/seeds.rb
+
+Style/ClassAndModuleChildren:
+   Enabled: false
+   EnforcedStyle: nested

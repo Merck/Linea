@@ -1,0 +1,38 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+- middlegate_type = params['middlegate_type']
+= hidden_field_tag(:middlegate_type, middlegate_type)
+.form-group
+  = form.label :name, class: 'control-label'
+  = form.text_field :name, class: 'form-control', required: true
+.form-group
+  = form.label :description, class: 'control-label'
+  = form.text_area :description, class: 'form-control', required: true
+.form-group
+  = form.label :url, 'URL', class: 'control-label'
+  = form.text_field :url, class: 'form-control', required: true
+.form-group
+  = form.label :terms_of_service_name, 'Data Use Restrictions', class: 'control-label'
+  a#data-restrictions-help[href="#" data-toggle="tooltip" data-trigger="hover click" data-placement="right" title="List any restrictions applicable to this dataset;
+    e.g. this data cannot leave a certain country, may not be shared outside of Company,
+    is classified as 'sensitive', etc."]
+    |&nbsp;
+    i.glyphicon.glyphicon-question-sign
+  = form.text_area :terms_of_service_name, class: 'form-control',
+       title: 'List any restrictions applicable to this dataset', required: true
+.form-group.row
+  .col-md-4
+    = form.label :subject_area_id, class: 'control-label control-label--padded'
+  .col-md-8
+    = form.collection_select :subject_area_id, SubjectArea.all, :id, :name, {}, class: 'form-control'
+.form-group.string.row
+  .col-md-4
+    = form.label :tags, class: 'control-label  control-label--padded'
+  .col-md-8
+    .controls
+      - span_class = local_assigns[:select_class] || 'span8'
+      = form.collection_select :tag_ids, Tag.all, :id, :name, {}, {multiple: true, class: "form-control #{span_class}", "data-placeholder" => "Choose tags"}
+.form-group.row
+  .col-md-4
+    = form.label 'Country', class: 'control-label control-label--padded'
+  .col-md-8
+    = form.select :country_code, countries_for_select, { include_blank: 'None' }, class: 'form-control', selected: @dataset.country_code

@@ -1,0 +1,40 @@
+/Copyright© 2017 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.  Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at       http://www.apache.org/licenses/LICENSE-2.0     Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. 
+#fav_datasets.tab-pane
+  .col-md-10.col-md-offset-1.results-container
+    - @fav_datasets.each do |d|
+      .row.dataset-result-row
+        .col-md-12.dataset-result-column
+          .row.header
+            .col-md-9.result-title
+              i.glyphicon.glyphicon-th
+              = link_to d.name, dataset_path(d)
+            .col-md-3.created-at.pull-right.text-right
+              = formatted_date(d.created_at)
+          .row
+            .col-md-5
+              span.ratings
+                input id="ratings" type="number" class="rating" size="xs" value=d.review_activities.average(:rating)
+              span.reviews
+                = d.review_activities.count
+                |  Reviews
+              span.likes
+                i.icon.icon-like-icon
+                = d.like_activities.count
+            .col-md-7.text-right.actions
+              span.subject-area
+                i.icon.icon-subject-area-icon
+                a[href="#"]
+                  = d.subject_area.name
+              span.owner
+                i.icon.icon-pencil-icon
+                a[href="#"]
+                  = d.owner.full_name
+          .row.description
+            .col-md-12
+              p
+                = d.description
+          .row.tags
+            .col-md-12
+              - d.tags.each do |t|
+                span.label.label-default
+                  = t.name

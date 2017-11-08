@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+mkdir -p .git/safe
+
+# Set up Ruby dependencies
+bundle install
+
+# Drop DB
+bundle exec rake db:drop
+# Drop role if needed
+#psql postgres -c "drop role if exists sampleDatabase"
+#Create and configure Postgress DB
+#psql postgres -c "create role sampleDatabase with createdb login password 'Linea567'" ||
+  :
+createdb -O sampleDatabase sampleDatabase_development || :
+createdb -O sampleDatabase sampleDatabase_test || :
+
+# Copy .env to local copies
+cp .env.example .env.development
+cp .env.example .env.test
+
+# Set up database
+bundle exec rake db:setup
+bundle exec rake db:test:prepare
+
+# Set up index
+bundle exec rails runner 'Dataset.create_search_index!'
+
+# Prepare datesets
+bundle exec rake elasticsearch:import

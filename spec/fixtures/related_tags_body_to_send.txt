@@ -1,0 +1,1 @@
+{"query":{"multi_match":{"query":"data","fields":["name^10","description^2","owner.full_name^2","subject_area.name","country_code","datasources.name","tags.name^2","tables.name","columns.name","columns.business_name", "dataset_attributes.key^5", "dataset_attributes.value^2", "dataset_attributes.comment"]}},"aggs":{"tags":{"terms":{"field":"tags.id"}}}}
