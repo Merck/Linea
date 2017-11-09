@@ -21,9 +21,6 @@ ENV APP_HOME /app
 RUN mkdir -p  $APP_HOME  /app-dependencies/  /root/.ssh
 
 ADD Gemfile* /app-dependencies/
-ADD id_rsa /root/.ssh/id_rsa
-RUN chmod 400 /root/.ssh/id_rsa                      && \
-    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
 RUN cd /app-dependencies/ && \
     bundle install
