@@ -721,7 +721,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-unique-jobs
   simplecov
-  sinatra(> 2.0.0)
+  sinatra(~> 2.0.1)
   sinatra-contrib
   slim
   slim-rails
