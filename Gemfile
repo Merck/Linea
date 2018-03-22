@@ -36,7 +36,7 @@ group :development do
   # Brings Unicode Normalization Form support, needed for capify-ec2
   gem 'unf', '~> 0.1.3'
   # Used for mocking webservices for local development
-  gem 'sinatra', require: false
+  gem 'sinatra','~>2.0.1', require: false
   # Utilities for sinatra
   gem 'sinatra-contrib', require: false
   # Preview email in the browser instead of sending it.
