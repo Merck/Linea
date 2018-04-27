@@ -294,7 +294,7 @@ GEM
       multi_json (~> 1.10)
     fog-xml (0.1.2)
       fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (~> 1.8.2, >= 1.5.11)
     foreman (0.78.0)
       thor (~> 0.19.1)
     formatador (0.2.5)
@@ -467,7 +467,7 @@ GEM
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
       activesupport (>= 4.2.0.beta, < 5.0)
-      nokogiri (~> 1.6.0)
+      nokogiri (~> 1.8.2)
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.0)
