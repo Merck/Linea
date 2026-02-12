@@ -96,27 +96,27 @@ $modal-title-font-size: 18px;
 
 //Typography
 $navFontSize: 16px;
-$font-family-sans-serif: "UniversLTStdLight";
+$font-family-sans-serif: "add-your-font";
 
 @font-face{
-  font-family:'UniversLTStd';
-  src: font-url('UniversLTStd.otf');
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
 }
 @font-face{
-  font-family:'UniversLTStdLight';
-  src: font-url('UniversLTStd-Light.otf');
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
 }
 @font-face{
-  font-family:'UniversLTStdLightCond';
-  src: font-url('UniversLTStd-LightCn.otf');
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
 }
 @font-face{
-  font-family:'UniversLTStdBold';
-  src: font-url('UniversLTStd-Bold.otf');
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
 }
 @font-face{
-  font-family:'UniversLTStdCondensed';
-  src: font-url('UniversLTStd-Cn.otf');
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
 }
 @font-face {
   font-family: 'Linea';
@@ -535,7 +535,7 @@ label {
     border-radius: 0;
     border: none;
     color: #FFF;
-    @include fontFamily('UniversLTStdLightCond');
+    @include fontFamily('add-your-font');
   }
 }
 
@@ -594,7 +594,7 @@ label {
   }
   .filter-section-title {
     margin-top: 20px;
-    @include fontFamily('UniversLTStdBold');
+    @include fontFamily('add-your-font');
     color: $filterSectionTitleColor;
   }
   input[type=checkbox] {
@@ -605,7 +605,7 @@ label {
     top: 5px;
 
     + label {
-      @include fontFamily('UniversLTStd');
+      @include fontFamily('add-your-font');
       color: $filterSectionTitleColor;
       /*text-transform: capitalize;*/
       max-width: 90%;
@@ -635,7 +635,7 @@ label {
 .related-datasets-container {
   .title {
     padding: 20px 0 5px;
-    @include fontFamily('UniversLTStdBold');
+    @include fontFamily('add-your-font');
     font-size: 18px;
     color: $secondaryTextColor;
     &:first-of-type {
@@ -694,7 +694,7 @@ label {
 .pagination {
   display: block;
   text-align: center;
-  @include fontFamily("UniversLTStdCondensed");
+  @include fontFamily("add-your-font");
   font-size: 18px;
   .previous_page {
     position: absolute;
@@ -709,7 +709,7 @@ label {
   }
 }
 .user-name {
-  @include fontFamily('UniversLTStd');
+  @include fontFamily('add-your-font');
   font-size: 14px;
   margin-right: 5px;
   div[class*="-activity"] & {
@@ -1171,7 +1171,7 @@ footer {
       background-color: $selectedColor;
     }
     a {
-      @include fontFamily("UniversLTStdLightCond");
+      @include fontFamily("add-your-font");
       font-size: 16px;
       color: #FFF;
     }

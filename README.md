@@ -198,3 +198,84 @@ Linea should now be available in your web browser at [http://localhost:3000](htt
 ##### Note
 If you receive an error with Google Oauth after the server has been started and you attempt to log in, regenerate client id and client secret and edit the `google_oauth.yml` file as per the oauth section of the [deployment instructions](./linea_docs/linea_deployment_instructions.md).
 
+
+## Customizing Fonts
+
+Linea uses custom fonts defined in the CSS files. To add your own custom fonts, follow these steps:
+
+### 1. Adding Font Files to the Public Directory
+
+Create a fonts directory in the public folder and add your font files:
+
+```bash
+# Create the fonts directory
+mkdir -p public/fonts
+
+# Copy your font files to the directory
+# Example: cp /path/to/your/fonts/* public/fonts/
+```
+
+Your font files should be in common web font formats such as:
+- `.woff` (Web Open Font Format)
+- `.woff2` (Web Open Font Format 2)
+- `.ttf` (TrueType Font)
+- `.eot` (Embedded OpenType)
+- `.svg` (Scalable Vector Graphics)
+
+### 2. Updating the CSS File
+
+Open the main CSS file at `app/assets/stylesheets/application.css.scss` and replace all instances of `"add-your-font"` with your actual font file names.
+
+The file currently contains placeholder `@font-face` declarations like this:
+
+```scss
+@font-face{
+  font-family:'add-your-font';
+  src: font-url('add-your-font');
+}
+```
+
+Replace these with your actual font declarations. For example, if you're using a font called "CustomFont":
+
+```scss
+@font-face{
+  font-family:'CustomFont-Regular';
+  src: font-url('CustomFont-Regular.woff2') format('woff2'),
+       font-url('CustomFont-Regular.woff') format('woff'),
+       font-url('CustomFont-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family:'CustomFont-Bold';
+  src: font-url('CustomFont-Bold.woff2') format('woff2'),
+       font-url('CustomFont-Bold.woff') format('woff'),
+       font-url('CustomFont-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+```
+
+### 3. Updating the Font Family Variable
+
+Also update the `$font-family-sans-serif` variable in the same file:
+
+```scss
+$font-family-sans-serif: "CustomFont-Regular", Helvetica Neue, Arial, Verdana, sans-serif;
+```
+
+### 4. Recompile Assets
+
+After making changes, recompile your assets:
+
+```bash
+rake assets:precompile
+```
+
+Then restart your Rails server for the changes to take effect.
+
+### Note on Asset Pipeline
+
+If you place fonts in `public/fonts/`, they will be served directly. Alternatively, you can place them in `app/assets/fonts/` to have them processed through the Rails asset pipeline. If using the asset pipeline approach, use `font-url()` helper without the full path, as Rails will automatically find fonts in the asset directories.
+
